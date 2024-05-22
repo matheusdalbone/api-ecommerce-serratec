@@ -17,7 +17,7 @@ public class Produto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "produto_id")
+	@Column(name = "id_produto")
 	private Integer ProdutoId;
 
 	@Column(name = "nome")
@@ -33,12 +33,12 @@ public class Produto {
 	private LocalDate dataCadastro;
 
 	@Column(name = "valor_unitario")
-	private String valorUnitario;
+	private Double valorUnitario;
 
 	private byte[] imagem;
 
 	@ManyToOne
-	@JoinColumn(name = "categoria_id")
+	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
 
 	public byte[] getImagem() {
@@ -89,11 +89,11 @@ public class Produto {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public String getValorUnitario() {
+	public Double getValorUnitario() {
 		return valorUnitario;
 	}
 
-	public void setValorUnitario(String valorUnitario) {
+	public void setValorUnitario(Double valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}
 
