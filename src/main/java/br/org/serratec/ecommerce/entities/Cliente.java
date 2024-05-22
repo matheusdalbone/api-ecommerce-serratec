@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -38,6 +39,9 @@ public class Cliente {
 	@OneToOne
 	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
+	
+	@OneToMany(mappedBy = "cliente")
+	private Pedido pedido;
 
 	public Integer getClienteId() {
 		return clienteId;
@@ -93,5 +97,13 @@ public class Cliente {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
 }
