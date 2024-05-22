@@ -1,6 +1,7 @@
 package br.org.serratec.ecommerce.entities;
 
 import java.sql.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,7 +42,7 @@ public class Cliente {
 	private Endereco endereco;
 	
 	@OneToMany(mappedBy = "cliente")
-	private Pedido pedido;
+	private List<Pedido> pedidos;
 
 	public Integer getClienteId() {
 		return clienteId;
@@ -99,11 +100,12 @@ public class Cliente {
 		this.endereco = endereco;
 	}
 
-	public Pedido getPedido() {
-		return pedido;
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
 
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
+
 }
