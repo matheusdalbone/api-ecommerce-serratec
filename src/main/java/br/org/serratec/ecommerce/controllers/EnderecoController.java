@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.org.serratec.ecommerce.entities.Endereco;
 import br.org.serratec.ecommerce.services.EnderecoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/enderecos")
@@ -39,7 +40,7 @@ public class EnderecoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Endereco> save(@RequestBody Endereco endereco) {
+	public ResponseEntity<Endereco> save(@Valid @RequestBody Endereco endereco) {
 		return new ResponseEntity<>(enderecoService.save(endereco), HttpStatus.CREATED);
 	}
 	

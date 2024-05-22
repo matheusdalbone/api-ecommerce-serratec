@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "endereço")
@@ -13,17 +14,21 @@ public class Endereco {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_endereco")
-	private Integer idEntereco;
+	private Integer idEndereco;
 	
+	@NotBlank(message = "Preencha o campo cep para cadastrar o endereço")
 	@Column(name = "cep")
 	private String cep;
 	
+	@NotBlank(message = "Preencha o campo rua para cadastrar o endereço")
 	@Column(name = "rua")
 	private String rua;
 	
+	@NotBlank(message = "Preencha o campo bairro para cadastrar o endereço")
 	@Column(name = "bairro")
 	private String bairro;
 	
+	@NotBlank(message = "Preencha o campo cidade para cadastrar o endereço")
 	@Column(name = "cidade")
 	private String cidade;
 	
@@ -33,16 +38,17 @@ public class Endereco {
 	@Column(name = "complemento")
 	private String complemento;
 	
+	@NotBlank(message = "Preencha o campo UF para cadastrar o endereço")
 	@Column(name = "uf")
 	private String uf;
 
 	
-	public Integer getIdEntereco() {
-		return idEntereco;
+	public Integer getIdEndereco() {
+		return idEndereco;
 	}
 
-	public void setIdEntereco(Integer idEntereco) {
-		this.idEntereco = idEntereco;
+	public void setIdEndereco(Integer idEndereco) {
+		this.idEndereco = idEndereco;
 	}
 
 	public String getCep() {
