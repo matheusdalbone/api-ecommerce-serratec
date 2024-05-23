@@ -3,6 +3,8 @@ package br.org.serratec.ecommerce.entities;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,13 +22,16 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pedido")
 	private Integer idPedido;
-
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "data_pedido")
 	private Date dataPedido;
-
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "data_entrega")
 	private Date dataEntrega;
-
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "data_envio")
 	private Date dataEnvio;
 
