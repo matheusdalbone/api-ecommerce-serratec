@@ -15,34 +15,29 @@ public class Endereco {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_endereco")
 	private Integer idEndereco;
-	
+
 	@NotBlank(message = "Preencha o campo cep para cadastrar o endereço")
 	@Column(name = "cep")
 	private String cep;
-	
-	@NotBlank(message = "Preencha o campo rua para cadastrar o endereço")
+
 	@Column(name = "rua")
 	private String rua;
-	
-	@NotBlank(message = "Preencha o campo bairro para cadastrar o endereço")
+
 	@Column(name = "bairro")
 	private String bairro;
-	
-	@NotBlank(message = "Preencha o campo cidade para cadastrar o endereço")
+
 	@Column(name = "cidade")
 	private String cidade;
-	
+
 	@Column(name = "numero")
 	private Integer numero;
-	
+
 	@Column(name = "complemento")
 	private String complemento;
-	
-	@NotBlank(message = "Preencha o campo UF para cadastrar o endereço")
+
 	@Column(name = "uf")
 	private String uf;
 
-	
 	public Integer getIdEndereco() {
 		return idEndereco;
 	}
@@ -106,6 +101,5 @@ public class Endereco {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-	
-	
+
 }
