@@ -40,6 +40,10 @@ public class ItemPedido {
 	@JoinColumn(name = "id_produto")
 	private Produto produto;
 
+	public ItemPedido() {
+		
+	}
+
 	public Integer getIdItemPedido() {
 		return idItemPedido;
 	}
@@ -57,11 +61,15 @@ public class ItemPedido {
 	}
 
 	public Double getPrecoVenda() {
+		//precoVenda = produto.getValorUnitario();
+		
 		return precoVenda;
 	}
 
-	public void setPrecoVenda() {
-		this.precoVenda = produto.getValorUnitario();
+	public void setPrecoVenda(Double precoVenda) {
+		this.precoVenda = precoVenda;
+		
+		//this.precoVenda = produto.getValorUnitario();
 	}
 
 	public Double getPercentualDesconto() {
@@ -77,7 +85,7 @@ public class ItemPedido {
 	}
 
 	public void setValorBruto(Double valorBruto) {
-		this.valorBruto = precoVenda * quantidade;
+		this.valorBruto = valorBruto;
 	}
 
 	public Double getValorLiquido() {
@@ -85,7 +93,7 @@ public class ItemPedido {
 	}
 
 	public void setValorLiquido(Double valorLiquido) {
-		this.valorLiquido = valorBruto - (valorBruto * percentualDesconto / 100);
+		this.valorLiquido = valorLiquido;
 	}
 
 	public Pedido getPedido() {

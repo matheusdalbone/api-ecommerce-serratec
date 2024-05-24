@@ -1,5 +1,6 @@
 package br.org.serratec.ecommerce.dtos;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -7,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class PedidoDto {
 	private Integer idPedido;
 	
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date dataPedido;
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	private LocalDateTime dataPedido;
 	
 	private Double valorTotal;
 	
@@ -18,10 +19,10 @@ public class PedidoDto {
 	public void setIdPedido(Integer idPedido) {
 		this.idPedido = idPedido;
 	}
-	public Date getDataPedido() {
+	public LocalDateTime getDataPedido() {
 		return dataPedido;
 	}
-	public void setDataPedido(Date dataPedido) {
+	public void setDataPedido(LocalDateTime dataPedido) {
 		this.dataPedido = dataPedido;
 	}
 	public Double getValorTotal() {
