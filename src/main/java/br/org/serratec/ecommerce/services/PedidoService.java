@@ -26,8 +26,20 @@ public class PedidoService {
 		return pedidoRepository.save(pedido);
 	}
 	
-	public Pedido update(Pedido pedido) {
-		return pedidoRepository.save(pedido);
+	public Pedido update(Integer id, Pedido pedido) {
+		Pedido novoPedido = pedidoRepository.getReferenceById(id);
+		updateData(novoPedido, pedido);
+		return pedidoRepository.save(novoPedido);
+	}
+
+	private void updateData(Pedido novoPedido, Pedido pedido) {
+		novoPedido.setDataPedido(pedido.getDataPedido());
+		novoPedido.setDataEntrega(pedido.getDataEntrega());
+		novoPedido.setDataEnvio(pedido.getDataEnvio());
+		novoPedido.setStatus(pedido.getStatus());
+		novoPedido.setValorTotal(pedido.getValorTotal());
+		novoPedido.setCliente(pedido.getCliente());
+		
 	}
 	
 	public Boolean delete(Integer id) {

@@ -45,9 +45,10 @@ public class PedidoController {
 		return new ResponseEntity<>(pedidoService.save(pedido), HttpStatus.CREATED);
 	}
 	
-	@PutMapping 
-	public ResponseEntity<Pedido> update(@RequestBody Pedido pedido) {
-		return new ResponseEntity<>(pedidoService.update(pedido), HttpStatus.CREATED);
+	@PutMapping("/{id}")
+	public ResponseEntity<Pedido> update(@PathVariable Integer id, @RequestBody Pedido pedido){
+		pedido = pedidoService.update(id, pedido);
+		return ResponseEntity.ok().body(pedido);
 	}
 	
 	@DeleteMapping("/{id}")

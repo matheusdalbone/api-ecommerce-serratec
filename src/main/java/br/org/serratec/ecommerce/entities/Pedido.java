@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.org.serratec.ecommerce.enums.StatusEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class Pedido {
 	private Date dataEnvio;
 
 	@Column(name = "status")
-	private Boolean status;
+	private Integer status;
 
 	@Column(name = "valor_total")
 	private Double valorTotal;
@@ -47,6 +48,25 @@ public class Pedido {
 	
 	@OneToMany(mappedBy = "pedido")
 	private List<ItemPedido> itensPedido;
+	
+	public Pedido() {
+	}
+	
+	
+
+	public Pedido(Integer idPedido, Date dataPedido, Date dataEntrega, Date dataEnvio, StatusEnum status,
+			Double valorTotal, Cliente cliente, List<ItemPedido> itensPedido) {
+		this.idPedido = idPedido;
+		this.dataPedido = dataPedido;
+		this.dataEntrega = dataEntrega;
+		this.dataEnvio = dataEnvio;
+		setStatus(status);
+		this.valorTotal = valorTotal;
+		this.cliente = cliente;
+		this.itensPedido = itensPedido;
+	}
+
+
 
 	public Integer getIdPedido() {
 		return idPedido;
@@ -80,12 +100,14 @@ public class Pedido {
 		this.dataEnvio = dataEnvio;
 	}
 
-	public Boolean getStatus() {
-		return status;
+	public StatusEnum getStatus() {
+		return StatusEnum.valorCodigo(status);
 	}
 
-	public void setStatus(Boolean status) {
-		this.status = status;
+	public void setStatus(StatusEnum status) {
+		if (status != null) {
+			this.status = status.getCodigo();
+		}
 	}
 
 	public Double getValorTotal() {
