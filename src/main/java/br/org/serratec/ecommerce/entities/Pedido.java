@@ -1,5 +1,6 @@
 package br.org.serratec.ecommerce.entities;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -25,20 +26,20 @@ public class Pedido {
 	@Column(name = "id_pedido")
 	private Integer idPedido;
 	
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	@Column(name = "data_pedido")
-	private Date dataPedido;
+	private LocalDateTime dataPedido;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	@Column(name = "data_envio")
+	private Date dataEnvio;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "data_entrega")
 	private Date dataEntrega;
 	
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "data_envio")
-	private Date dataEnvio;
-
 	@Column(name = "status")
-	private Integer status;
+	private StatusEnum status;
 
 	@Column(name = "valor_total")
 	private Double valorTotal;
@@ -51,25 +52,6 @@ public class Pedido {
 	@OneToMany(mappedBy = "pedido")
 	@JsonIgnore
 	private List<ItemPedido> itensPedido;
-	
-	public Pedido() {
-	}
-	
-	
-
-	public Pedido(Integer idPedido, Date dataPedido, Date dataEntrega, Date dataEnvio, StatusEnum status,
-			Double valorTotal, Cliente cliente, List<ItemPedido> itensPedido) {
-		this.idPedido = idPedido;
-		this.dataPedido = dataPedido;
-		this.dataEntrega = dataEntrega;
-		this.dataEnvio = dataEnvio;
-		setStatus(status);
-		this.valorTotal = valorTotal;
-		this.cliente = cliente;
-		this.itensPedido = itensPedido;
-	}
-
-
 
 	public Integer getIdPedido() {
 		return idPedido;
@@ -79,20 +61,12 @@ public class Pedido {
 		this.idPedido = idPedido;
 	}
 
-	public Date getDataPedido() {
-		return dataPedido;
+	public LocalDateTime getDataPedido() {
+		return LocalDateTime.now();
 	}
 
-	public void setDataPedido(Date dataPedido) {
+	public void setDataPedido(LocalDateTime dataPedido) {
 		this.dataPedido = dataPedido;
-	}
-
-	public Date getDataEntrega() {
-		return dataEntrega;
-	}
-
-	public void setDataEntrega(Date dataEntrega) {
-		this.dataEntrega = dataEntrega;
 	}
 
 	public Date getDataEnvio() {
@@ -103,14 +77,20 @@ public class Pedido {
 		this.dataEnvio = dataEnvio;
 	}
 
+	public Date getDataEntrega() {
+		return dataEntrega;
+	}
+
+	public void setDataEntrega(Date dataEntrega) {
+		this.dataEntrega = dataEntrega;
+	}
+
 	public StatusEnum getStatus() {
-		return StatusEnum.valorCodigo(status);
+		return status;
 	}
 
 	public void setStatus(StatusEnum status) {
-		if (status != null) {
-			this.status = status.getCodigo();
-		}
+		this.status = status;
 	}
 
 	public Double getValorTotal() {
@@ -129,4 +109,34 @@ public class Pedido {
 		this.cliente = cliente;
 	}
 
+	public List<ItemPedido> getItensPedido() {
+		return itensPedido;
+	}
+
+	public void setItensPedido(List<ItemPedido> itensPedido) {
+		this.itensPedido = itensPedido;
+	}
+	
+	public StatusEnum validaStatus() {
+		if (this.status == null) {
+			return StatusEnum.PEDIDO_REALIZADO;
+		}
+		switch(this.status) {
+		case PEDIDO_REALIZADO:
+			if(this.dataEnvio != null) {
+				return StatusEnum.EM_TRANSITO;
+			} else {
+				return this.status;
+			}
+		case EM_TRANSITO:
+			if(this.dataEntrega != null) {
+				return StatusEnum.PEDIDO_ENTREGUE;
+			}else {
+				return this.status;
+			}
+		case PEDIDO_ENTREGUE:
+			return this.status;
+		}
+		return this.status;
+	}
 }
