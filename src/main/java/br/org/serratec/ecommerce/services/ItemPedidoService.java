@@ -22,9 +22,6 @@ public class ItemPedidoService {
 	@Autowired
 	ProdutoRepository produtoRepository;
 	
-	@Autowired
-	private ModelMapper modelMapper;
-	
 	public List<ItemPedido> findAll() {
 		return itemPedidoRepository.findAll();
 	}
@@ -75,14 +72,5 @@ public class ItemPedidoService {
 		} else {
 			return false;
 		}
-	}
-	
-	public RelatorioPedidoDto relatorioPedido(Integer id) {
-		ItemPedido itemPedido = itemPedidoRepository.findById(id).orElse(null);
-		RelatorioPedidoDto relatorioPedido = null;
-		
-		relatorioPedido = modelMapper.map(itemPedido, RelatorioPedidoDto.class);
-		
-		return relatorioPedido;
 	}
 }

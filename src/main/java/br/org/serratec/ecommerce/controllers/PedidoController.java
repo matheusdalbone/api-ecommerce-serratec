@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.org.serratec.ecommerce.dtos.PedidoDto;
+import br.org.serratec.ecommerce.dtos.RelatorioPedidoDto;
 import br.org.serratec.ecommerce.entities.Pedido;
 import br.org.serratec.ecommerce.services.PedidoService;
 import jakarta.validation.Valid;
@@ -55,6 +56,17 @@ public class PedidoController {
 			return new ResponseEntity<>(pedidoService.findByIdPedidoDto(id), HttpStatus.NOT_FOUND);
 		else
 			return new ResponseEntity<>(pedidoService.findByIdPedidoDto(id), HttpStatus.OK);
+	}
+	
+	@GetMapping("/relatorio-pedido/{id}")
+	public ResponseEntity<RelatorioPedidoDto> relatorioPedido(@PathVariable Integer id) {
+		RelatorioPedidoDto relatorioPedido = null;
+		relatorioPedido = pedidoService.relatorioPedido(id);
+		
+		if(relatorioPedido == null)
+			return new ResponseEntity<>(relatorioPedido, HttpStatus.NOT_FOUND);
+		else 
+			return new ResponseEntity<>(relatorioPedido, HttpStatus.OK);
 	}
 	
 	@PostMapping

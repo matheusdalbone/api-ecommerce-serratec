@@ -1,55 +1,51 @@
 package br.org.serratec.ecommerce.dtos;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class RelatorioPedidoDto {
 
-	private ProdutoDto produto;
-	private PedidoDto pedido;
-	private Double precoVenda;
-	private Integer quantidade;
-	private Double valorBruto;
-	private Double percentualDesconto;
-	private Double valorLiquido;
+	private Integer idPedido;
 	
-	public Double getPrecoVenda() {
-		return precoVenda;
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	private LocalDateTime dataPedido;
+	
+	private Double valorTotal;
+	
+	private List<ItemPedidoDto> itensPedido;
+
+	public Integer getIdPedido() {
+		return idPedido;
 	}
-	public void setPrecoVenda(Double precoVenda) {
-		this.precoVenda = precoVenda;
+
+	public void setIdPedido(Integer idPedido) {
+		this.idPedido = idPedido;
 	}
-	public Integer getQuantidade() {
-		return quantidade;
+
+	public LocalDateTime getDataPedido() {
+		return dataPedido;
 	}
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
+
+	public void setDataPedido(LocalDateTime dataPedido) {
+		this.dataPedido = dataPedido;
 	}
-	public Double getValorBruto() {
-		return valorBruto;
+
+	public Double getValorTotal() {
+		return valorTotal;
 	}
-	public void setValorBruto(Double valorBruto) {
-		this.valorBruto = valorBruto;
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
 	}
-	public Double getPercentualDesconto() {
-		return percentualDesconto;
+
+	public List<ItemPedidoDto> getItensPedido() {
+		return itensPedido;
 	}
-	public void setPercentualDesconto(Double percentualDesconto) {
-		this.percentualDesconto = percentualDesconto;
+
+	public void setItensPedido(List<ItemPedidoDto> itensPedido) {
+		this.itensPedido = itensPedido;
 	}
-	public Double getValorLiquido() {
-		return valorLiquido;
-	}
-	public void setValorLiquido(Double valorLiquido) {
-		this.valorLiquido = valorLiquido;
-	}
-	public ProdutoDto getProduto() {
-		return produto;
-	}
-	public void setProduto(ProdutoDto produto) {
-		this.produto = produto;
-	}
-	public PedidoDto getPedido() {
-		return pedido;
-	}
-	public void setPedido(PedidoDto pedido) {
-		this.pedido = pedido;
-	}
+	
 }

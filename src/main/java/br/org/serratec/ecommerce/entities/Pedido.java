@@ -119,7 +119,7 @@ public class Pedido {
 	
 	public StatusEnum validaStatus() {
 		if (this.status == null) {
-			return StatusEnum.PEDIDO_REALIZADO;
+			this.status = StatusEnum.PEDIDO_REALIZADO;
 		}
 		switch(this.status) {
 		case PEDIDO_REALIZADO:

@@ -39,19 +39,6 @@ public class ItemPedidoController {
 			return new ResponseEntity<>(itemPedido, HttpStatus.OK);
 	}
 	
-	@GetMapping("/relatorio-pedido/{id}")
-	public ResponseEntity<RelatorioPedidoDto> relatorioPedido(@PathVariable Integer id) {
-		RelatorioPedidoDto relatorioPedido = null;
-		
-		relatorioPedido = itemPedidoService.relatorioPedido(id);
-		
-		if(relatorioPedido == null) {
-			return new ResponseEntity<>(relatorioPedido, HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>(relatorioPedido, HttpStatus.OK);
-		}
-	}
-	
 	@PostMapping
 	public ResponseEntity<ItemPedido> save(@RequestBody ItemPedido itemPedido) {
 		return new ResponseEntity<>(itemPedidoService.save(itemPedido), HttpStatus.CREATED);
