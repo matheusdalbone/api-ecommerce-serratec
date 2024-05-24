@@ -49,7 +49,7 @@ public class ItemPedidoService {
 		
 		Integer produtoId = itemPedido.getProduto().getProdutoId();
 		Produto produto = produtoRepository.findById(produtoId).orElseThrow(
-				() -> new EntityNotFoundException("Não foi encontrado nenhum produto com esse id: " + produtoId));
+				() -> new EntityNotFoundException(produtoId));
 		
 		if(!produto.equals(null)) {
 			entidade.setPrecoVenda(produto.getValorUnitario());

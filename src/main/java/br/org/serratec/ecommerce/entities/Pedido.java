@@ -86,7 +86,7 @@ public class Pedido {
 	}
 
 	public StatusEnum getStatus() {
-		return status;
+		return validaStatus();
 	}
 
 	public void setStatus(StatusEnum status) {

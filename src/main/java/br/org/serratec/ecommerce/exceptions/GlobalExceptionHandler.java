@@ -1,6 +1,7 @@
 package br.org.serratec.ecommerce.exceptions;
 
 import java.net.URI;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -19,6 +20,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import io.micrometer.common.lang.Nullable;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -42,6 +44,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		problemDetail.setTitle("Recurso Não Encontrado");
 		problemDetail.setType(URI.create("https://api.biblioteca.com/errors/not-found"));
 		return problemDetail;
+	}
+	
+	@ExceptionHandler(EntityNotFoundException.class)
+	public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException e, HttpServletRequest request) {
+		String error = "Entity not found";
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
 	}
 
 	@Override
