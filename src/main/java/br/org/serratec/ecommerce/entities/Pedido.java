@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.org.serratec.ecommerce.enums.StatusEnum;
 import jakarta.persistence.Column;
@@ -44,9 +45,11 @@ public class Pedido {
 
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
+	@JsonIgnore
 	private Cliente cliente;
 	
 	@OneToMany(mappedBy = "pedido")
+	@JsonIgnore
 	private List<ItemPedido> itensPedido;
 	
 	public Pedido() {

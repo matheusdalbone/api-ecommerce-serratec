@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.org.serratec.ecommerce.dtos.RelatorioPedidoDto;
 import br.org.serratec.ecommerce.entities.ItemPedido;
 import br.org.serratec.ecommerce.services.ItemPedidoService;
 
@@ -38,6 +39,19 @@ public class ItemPedidoController {
 			return new ResponseEntity<>(itemPedido, HttpStatus.OK);
 	}
 	
+	@GetMapping("/relatorio-pedido/{id}")
+	public ResponseEntity<RelatorioPedidoDto> relatorioPedido(@PathVariable Integer id) {
+		RelatorioPedidoDto relatorioPedido = null;
+		
+		relatorioPedido = itemPedidoService.relatorioPedido(id);
+		
+		if(relatorioPedido == null) {
+			return new ResponseEntity<>(relatorioPedido, HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(relatorioPedido, HttpStatus.OK);
+		}
+	}
+	
 	@PostMapping
 	public ResponseEntity<ItemPedido> save(@RequestBody ItemPedido itemPedido) {
 		return new ResponseEntity<>(itemPedidoService.save(itemPedido), HttpStatus.CREATED);
@@ -57,6 +71,5 @@ public class ItemPedidoController {
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-	
 }
 

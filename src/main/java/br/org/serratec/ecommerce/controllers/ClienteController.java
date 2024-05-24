@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.org.serratec.ecommerce.dtos.ClienteResumidoDto;
 import br.org.serratec.ecommerce.entities.Cliente;
 import br.org.serratec.ecommerce.services.ClienteService;
 
@@ -38,6 +39,16 @@ public class ClienteController {
 		}else {
 			return new ResponseEntity<>(cliente, HttpStatus.OK);
 		}
+	}
+	
+	@GetMapping("/cliente-resumido")
+	public ResponseEntity<List<ClienteResumidoDto>> findAllClienteResumido() {
+		return new ResponseEntity<>(clienteService.findAllClienteResumido(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/cliente-resumido/{id}")
+	public ResponseEntity<ClienteResumidoDto> findByIdResumido(@PathVariable Integer id) {
+		return new ResponseEntity<>(clienteService.findByIdResumido(id), HttpStatus.OK);
 	}
 	
 	@PostMapping

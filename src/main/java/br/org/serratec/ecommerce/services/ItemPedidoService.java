@@ -2,9 +2,11 @@ package br.org.serratec.ecommerce.services;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.org.serratec.ecommerce.dtos.RelatorioPedidoDto;
 import br.org.serratec.ecommerce.entities.ItemPedido;
 import br.org.serratec.ecommerce.repositories.ItemPedidoRepository;
 
@@ -13,6 +15,9 @@ public class ItemPedidoService {
 
 	@Autowired
 	ItemPedidoRepository itemPedidoRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	public List<ItemPedido> findAll() {
 		return itemPedidoRepository.findAll();
@@ -44,5 +49,14 @@ public class ItemPedidoService {
 		} else {
 			return false;
 		}
+	}
+	
+	public RelatorioPedidoDto relatorioPedido(Integer id) {
+		ItemPedido itemPedido = itemPedidoRepository.findById(id).orElse(null);
+		RelatorioPedidoDto relatorioPedido = null;
+		
+		relatorioPedido = modelMapper.map(itemPedido, RelatorioPedidoDto.class);
+		
+		return relatorioPedido;
 	}
 }
