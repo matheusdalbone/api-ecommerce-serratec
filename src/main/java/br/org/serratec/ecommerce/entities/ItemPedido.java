@@ -60,8 +60,8 @@ public class ItemPedido {
 		return precoVenda;
 	}
 
-	public void setPrecoVenda(Double precoVenda) {
-		this.precoVenda = precoVenda;
+	public void setPrecoVenda() {
+		this.precoVenda = produto.getValorUnitario();
 	}
 
 	public Double getPercentualDesconto() {
@@ -77,7 +77,7 @@ public class ItemPedido {
 	}
 
 	public void setValorBruto(Double valorBruto) {
-		this.valorBruto = valorBruto;
+		this.valorBruto = precoVenda * quantidade;
 	}
 
 	public Double getValorLiquido() {
@@ -85,7 +85,7 @@ public class ItemPedido {
 	}
 
 	public void setValorLiquido(Double valorLiquido) {
-		this.valorLiquido = valorLiquido;
+		this.valorLiquido = valorBruto - (valorBruto * percentualDesconto / 100);
 	}
 
 	public Pedido getPedido() {
