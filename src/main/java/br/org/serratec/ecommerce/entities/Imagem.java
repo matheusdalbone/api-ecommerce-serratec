@@ -2,7 +2,8 @@ package br.org.serratec.ecommerce.entities;
 
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +15,11 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "imagem")
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "idImagem",
+		scope = Imagem.class
+)
 public class Imagem {
 
 	@Id
@@ -24,7 +30,6 @@ public class Imagem {
 	@Column(name = "imagem_tipo")
 	private String tipo;
 
-	@JsonIgnore
 	@Lob
 	@Column(name = "imagem_data")
 	private byte[] data;

@@ -31,7 +31,7 @@ public class ItemPedidoService {
 	}
 	
 	public ItemPedido save(ItemPedido itemPedido) {
-		Integer produtoId = itemPedido.getProduto().getProdutoId();
+		Integer produtoId = itemPedido.getProduto().getIdProduto();
 		Produto produto = produtoRepository.findById(produtoId).orElse(null);
 		
 		itemPedido.setPrecoVenda(produto.getValorUnitario());
@@ -44,7 +44,7 @@ public class ItemPedidoService {
 	public ItemPedido update(Integer id, ItemPedido itemPedido) {
 		ItemPedido entidade = itemPedidoRepository.getReferenceById(id);
 		
-		Integer produtoId = itemPedido.getProduto().getProdutoId();
+		Integer produtoId = itemPedido.getProduto().getIdProduto();
 		Produto produto = produtoRepository.findById(produtoId).orElseThrow(
 				() -> new EntityNotFoundException(produtoId));
 		

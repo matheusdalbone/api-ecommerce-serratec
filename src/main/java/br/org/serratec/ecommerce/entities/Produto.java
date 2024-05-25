@@ -2,6 +2,9 @@ package br.org.serratec.ecommerce.entities;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,12 +19,17 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "produto")
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "idProduto",
+		scope = Produto.class
+)
 public class Produto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_produto")
-	private Integer ProdutoId;
+	private Integer idProduto;
 
 	@Column(name = "nome")
 	private String nome;
@@ -54,12 +62,12 @@ public class Produto {
 		this.imagem = imagem;
 	}
 
-	public Integer getProdutoId() {
-		return ProdutoId;
+	public Integer getIdProduto() {
+		return idProduto;
 	}
 
-	public void setProdutoId(Integer produtoId) {
-		ProdutoId = produtoId;
+	public void setIdProduto(Integer produtoId) {
+		idProduto = produtoId;
 	}
 
 	public String getNome() {

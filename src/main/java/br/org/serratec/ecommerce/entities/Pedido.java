@@ -5,7 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.org.serratec.ecommerce.enums.StatusEnum;
 import jakarta.persistence.Column;
@@ -20,6 +21,11 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "pedido")
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "idPedido",
+		scope = Pedido.class
+)
 public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +55,6 @@ public class Pedido {
 	private Cliente cliente;
 	
 	@OneToMany(mappedBy = "pedido")
-	@JsonIgnore
 	private List<ItemPedido> itensPedido;
 
 	public Integer getIdPedido() {
