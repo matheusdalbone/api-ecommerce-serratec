@@ -18,11 +18,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "cliente")
-@JsonIdentityInfo(
-		generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "idCliente",
-		scope = Cliente.class
-)
+
 public class Cliente {
 	
 	@Id

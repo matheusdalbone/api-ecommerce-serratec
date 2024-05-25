@@ -2,9 +2,6 @@ package br.org.serratec.ecommerce.entities;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,11 +16,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "produto")
-@JsonIdentityInfo(
-		generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "idProduto",
-		scope = Produto.class
-)
 public class Produto {
 
 	@Id
