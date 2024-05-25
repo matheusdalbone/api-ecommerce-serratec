@@ -46,7 +46,6 @@ public class Pedido {
 
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
-	@JsonIgnore
 	private Cliente cliente;
 	
 	@OneToMany(mappedBy = "pedido")
@@ -119,24 +118,27 @@ public class Pedido {
 	
 	public StatusEnum validaStatus() {
 		if (this.status == null) {
-			this.status = StatusEnum.PEDIDO_REALIZADO;
+			this.status = StatusEnum.PEDIDO_EM_ABERTO;
 		}
 		switch(this.status) {
 		case PEDIDO_REALIZADO:
 			if(this.dataEnvio != null) {
-				return StatusEnum.EM_TRANSITO;
+				this.status =  StatusEnum.EM_TRANSITO;
 			} else {
-				return this.status;
+				 this.status = StatusEnum.PEDIDO_REALIZADO;
 			}
 		case EM_TRANSITO:
 			if(this.dataEntrega != null) {
-				return StatusEnum.PEDIDO_ENTREGUE;
+				this.status =  StatusEnum.PEDIDO_ENTREGUE;
 			}else {
-				return this.status;
+				this.status =  StatusEnum.PEDIDO_REALIZADO;
 			}
 		case PEDIDO_ENTREGUE:
 			return this.status;
+		default:
+			break;
 		}
+		
 		return this.status;
 	}
 }
