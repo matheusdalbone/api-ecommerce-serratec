@@ -5,8 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.org.serratec.ecommerce.enums.StatusEnum;
 import jakarta.persistence.Column;
@@ -45,7 +44,8 @@ public class Pedido {
 
 	@Column(name = "valor_total")
 	private Double valorTotal;
-
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
@@ -123,21 +123,14 @@ public class Pedido {
 		}
 		switch(this.status) {
 		case PEDIDO_REALIZADO:
-			if(this.dataEnvio != null) {
+			if(this.dataEnvio != null && this.dataEntrega == null) {
 				this.status =  StatusEnum.EM_TRANSITO;
-			} else {
-				 this.status = StatusEnum.PEDIDO_REALIZADO;
 			}
-		case EM_TRANSITO:
-			if(this.dataEntrega != null) {
-				this.status =  StatusEnum.PEDIDO_ENTREGUE;
-			}else {
-				this.status =  StatusEnum.PEDIDO_REALIZADO;
+			if(this.dataEnvio != null && this.dataEntrega != null){
+				 this.status = StatusEnum.PEDIDO_ENTREGUE;
 			}
-		case PEDIDO_ENTREGUE:
-			return this.status;
-		default:
-			break;
+			default:
+				break;
 		}
 		
 		return this.status;

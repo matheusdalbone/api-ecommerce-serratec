@@ -47,12 +47,26 @@ public class RelatorioPedidoDto {
 	public void setItensPedido(List<ItemPedidoDto> itensPedido) {
 		this.itensPedido = itensPedido;
 	}
+	
+//	@Override
+//	public String toString() {
+//	
+//		return toString() + String.format("""
+//				Relatório de pedido: 
+//				Número do pedido: %s
+//				Data do Pedido: %s
+//				Valor total: %s
+//				Itens do pedido: %s
+//				""", idPedido, dataPedido, valorTotal, itensPedido);
+//	}
 
 	@Override
 	public String toString() {
 		return "RelatorioPedidoDto [idPedido=" + idPedido + ", dataPedido=" + dataPedido + ", valorTotal=" + valorTotal
 				+ ", itensPedido=" + itensPedido + "]";
 	}
+	
+	
 	
 	
 }
