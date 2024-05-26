@@ -24,8 +24,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-	
-	
+
 	@ExceptionHandler(IllegalArgumentException.class)
 	public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException exception, WebRequest request) {
 
@@ -45,22 +44,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		problemDetail.setType(URI.create("https://api.biblioteca.com/errors/not-found"));
 		return problemDetail;
 	}
-	
-	@ExceptionHandler(EntityNotFoundException.class)
-	public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException e, HttpServletRequest request) {
+
+	@ExceptionHandler(EntityNotFoundExceptionHandler.class)
+	public ResponseEntity<StandardError> entityNotFound(EntityNotFoundExceptionHandler e, HttpServletRequest request) {
 		String error = "Entity not found";
-		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(),
+				request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
-	
-//	@ExceptionHandler(NullPointerException.class)
-//	public ResponseEntity<StandardError> nullPointer(NullPointerException e, HttpServletRequest request) {
-//		String error = "Erro na requisição";
-//		HttpStatus status = HttpStatus.BAD_REQUEST;
-//		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
-//		return ResponseEntity.status(status).body(err);
-//	}
 
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers,

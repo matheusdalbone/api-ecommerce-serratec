@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.org.serratec.ecommerce.enums.StatusEnum;
 import jakarta.persistence.Column;
@@ -86,7 +85,7 @@ public class Pedido {
 	}
 
 	public StatusEnum getStatus() {
-		return validaStatus();
+		return status;
 	}
 
 	public void setStatus(StatusEnum status) {
@@ -117,22 +116,4 @@ public class Pedido {
 		this.itensPedido = itensPedido;
 	}
 	
-	public StatusEnum validaStatus() {
-		if (this.status == null) {
-			this.status = StatusEnum.PEDIDO_EM_ABERTO;
-		}
-		switch(this.status) {
-		case PEDIDO_REALIZADO:
-			if(this.dataEnvio != null && this.dataEntrega == null) {
-				this.status =  StatusEnum.EM_TRANSITO;
-			}
-			if(this.dataEnvio != null && this.dataEntrega != null){
-				 this.status = StatusEnum.PEDIDO_ENTREGUE;
-			}
-			default:
-				break;
-		}
-		
-		return this.status;
-	}
 }

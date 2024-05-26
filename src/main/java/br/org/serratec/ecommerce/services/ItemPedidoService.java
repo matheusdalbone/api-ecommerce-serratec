@@ -2,14 +2,12 @@ package br.org.serratec.ecommerce.services;
 
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.org.serratec.ecommerce.dtos.RelatorioPedidoDto;
 import br.org.serratec.ecommerce.entities.ItemPedido;
 import br.org.serratec.ecommerce.entities.Produto;
-import br.org.serratec.ecommerce.exceptions.EntityNotFoundException;
+import br.org.serratec.ecommerce.exceptions.EntityNotFoundExceptionHandler;
 import br.org.serratec.ecommerce.repositories.ItemPedidoRepository;
 import br.org.serratec.ecommerce.repositories.ProdutoRepository;
 
@@ -46,7 +44,7 @@ public class ItemPedidoService {
 		
 		Integer produtoId = itemPedido.getProduto().getIdProduto();
 		Produto produto = produtoRepository.findById(produtoId).orElseThrow(
-				() -> new EntityNotFoundException(produtoId));
+				() -> new EntityNotFoundExceptionHandler(produtoId));
 		
 		if(!produto.equals(null)) {
 			entidade.setPrecoVenda(produto.getValorUnitario());

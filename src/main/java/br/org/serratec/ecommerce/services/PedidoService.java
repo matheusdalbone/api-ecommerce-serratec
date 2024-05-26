@@ -13,6 +13,7 @@ import br.org.serratec.ecommerce.entities.Cliente;
 import br.org.serratec.ecommerce.entities.ItemPedido;
 import br.org.serratec.ecommerce.entities.Pedido;
 import br.org.serratec.ecommerce.enums.StatusEnum;
+import br.org.serratec.ecommerce.exceptions.EntityNotFoundExceptionHandler;
 import br.org.serratec.ecommerce.repositories.ClienteRepository;
 import br.org.serratec.ecommerce.repositories.ItemPedidoRepository;
 import br.org.serratec.ecommerce.repositories.PedidoRepository;
@@ -54,7 +55,8 @@ public class PedidoService {
 	}
 	
 	public Pedido findById(Integer id) {
-		Pedido pedido = pedidoRepository.findById(id).orElseThrow();
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow(
+				() -> new EntityNotFoundExceptionHandler(id));
 		Double valorTotal = 0.0;
 		
 		List<ItemPedido> itensPedido = pedido.getItensPedido();
@@ -69,7 +71,8 @@ public class PedidoService {
 	}
 	
 	public PedidoDto findByIdPedidoDto(Integer id) {
-		Pedido pedido = pedidoRepository.findById(id).orElseThrow();
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow(
+				() -> new EntityNotFoundExceptionHandler(id));
 		PedidoDto pedidoDto = null;
 		pedidoDto = modelMapper.map(pedido, PedidoDto.class);
 		
@@ -77,33 +80,36 @@ public class PedidoService {
 	}
 	
 	public Pedido save(Pedido pedido) {
+		if (pedido.getStatus() == null) 
+			pedido.setStatus(StatusEnum.PEDIDO_EM_ABERTO);
 		return pedidoRepository.save(pedido);
 	}
 	
 	public Pedido update(Integer id, Pedido pedido) {
 		Integer clienteId = pedido.getCliente().getClienteId();
-		Cliente cliente = clienteRepository.findById(clienteId).orElseThrow();
+		Cliente cliente = clienteRepository.findById(clienteId).orElse(null);
 		String destinatario = cliente.getEmail();
 		Pedido novoPedido = pedidoRepository.getReferenceById(id);
 		updateData(novoPedido, pedido);
-		if(pedido.getStatus() != StatusEnum.PEDIDO_EM_ABERTO) { 
-			switch(pedido.getStatus()) {
+		
+		switch(novoPedido.getStatus()) {
 			case PEDIDO_REALIZADO:
 				email.enviaEmail(destinatario,"Pedido realizado" , "Seu pedido foi realizado." + relatorioPedido(id));
-				break;
-			case EM_TRANSITO:
-				email.enviaEmail(destinatario,"Pedido em trânsito" , "Seu pedido foi enviado para a transportadora e está a caminho." + relatorioPedido(id));
-				break;
-			case PEDIDO_ENTREGUE:
-				email.enviaEmail(destinatario,"Pedido entregue" , "Seu pedido chegou em sua residência." + relatorioPedido(id));
+				if(novoPedido.getDataEnvio() != null && novoPedido.getDataEntrega() == null) {
+					novoPedido.setStatus(StatusEnum.EM_TRANSITO);
+					email.enviaEmail(destinatario,"Pedido em trânsito" , "Seu pedido foi enviado para a transportadora e está a caminho." + relatorioPedido(id));
+				}
+				if(novoPedido.getDataEnvio() != null && novoPedido.getDataEntrega() != null) {
+					novoPedido.setStatus(StatusEnum.PEDIDO_ENTREGUE);
+					email.enviaEmail(destinatario,"Pedido entregue" , "Seu pedido chegou em sua residência." + relatorioPedido(id));
+				}
 				break;
 			default:
 				break;
 
 			}
-		} 
 		return pedidoRepository.save(novoPedido);
-	}
+	} 
 
 	private void updateData(Pedido novoPedido, Pedido pedido) {
 		novoPedido.setDataEntrega(pedido.getDataEntrega());
@@ -128,10 +134,12 @@ public class PedidoService {
 	}
 	
 	public RelatorioPedidoDto relatorioPedido(Integer id) {
-		Pedido pedido = pedidoRepository.findById(id).orElseThrow();
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow(
+				() -> new EntityNotFoundExceptionHandler(id));
 		RelatorioPedidoDto relatorioPedido = null;
 		
 		relatorioPedido = modelMapper.map(pedido, RelatorioPedidoDto.class);
 		return relatorioPedido;
 	}
+	
 }
