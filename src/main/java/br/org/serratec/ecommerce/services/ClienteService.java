@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.org.serratec.ecommerce.dtos.ClienteResumidoDto;
 import br.org.serratec.ecommerce.entities.Cliente;
+import br.org.serratec.ecommerce.entities.Endereco;
 import br.org.serratec.ecommerce.repositories.ClienteRepository;
 
 @Service
@@ -28,8 +29,15 @@ public class ClienteService {
 		return clienteRepository.save(cliente);
 	}
 	
-	public Cliente update(Cliente cliente) {
-		return clienteRepository.save(cliente);
+	public Cliente update(Integer id,Cliente cliente) {
+		Cliente clienteAux = clienteRepository.getReferenceById(id);
+		Endereco endereco = cliente.getEndereco();
+		clienteAux.setDataNascimento(cliente.getDataNascimento());
+		clienteAux.setEndereco(endereco);
+		clienteAux.setTefelone(cliente.getTefelone());
+		clienteAux.setEmail(cliente.getEmail());
+		clienteAux.setNomeCompleto(cliente.getNomeCompleto());
+		return clienteRepository.save(clienteAux);
 	}
 	
 	public Boolean delete(Integer id) {

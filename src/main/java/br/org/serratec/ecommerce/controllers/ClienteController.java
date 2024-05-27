@@ -57,9 +57,9 @@ public class ClienteController {
 		return new ResponseEntity<>(clienteService.save(cliente), HttpStatus.CREATED);
 	}
 	
-	@PutMapping 
-	public ResponseEntity<Cliente> update(@RequestBody @Valid Cliente cliente) {
-		return new ResponseEntity<>(clienteService.update(cliente), HttpStatus.CREATED);
+	@PutMapping("/{id}") 
+	public ResponseEntity<Cliente> update(@Valid @PathVariable Integer id,@RequestBody  Cliente cliente) {
+		return new ResponseEntity<>(clienteService.update(id,cliente), HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")
