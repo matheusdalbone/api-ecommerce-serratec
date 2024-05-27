@@ -2,9 +2,6 @@ package br.org.serratec.ecommerce.entities;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,10 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "categoria")
-
 public class Categoria {
 	
 	@Id
@@ -24,9 +21,11 @@ public class Categoria {
 	private Integer categoriaId;
 	
 	@Column(name = "nome")
+	@NotBlank(message = "Insira um nome a categoria")
 	private String nomeCategoria;
 	
 	@Column(name = "descricao")
+	@NotBlank(message = "Insira uma descrição a categoria")
 	private String descricaoCategoria;
 	
 	@OneToMany(mappedBy = "categoria")

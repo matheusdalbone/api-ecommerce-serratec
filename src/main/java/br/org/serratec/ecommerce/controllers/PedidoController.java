@@ -75,7 +75,7 @@ public class PedidoController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Pedido> update(@PathVariable Integer id, @RequestBody Pedido pedido){
+	public ResponseEntity<Pedido> update(@PathVariable Integer id, @RequestBody @Valid Pedido pedido){
 		pedido = pedidoService.update(id, pedido);
 		return ResponseEntity.ok().body(pedido);
 	}

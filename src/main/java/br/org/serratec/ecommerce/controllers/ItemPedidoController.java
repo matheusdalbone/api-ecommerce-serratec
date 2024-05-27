@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.org.serratec.ecommerce.dtos.RelatorioPedidoDto;
 import br.org.serratec.ecommerce.entities.ItemPedido;
 import br.org.serratec.ecommerce.services.ItemPedidoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/itemPedidos")
@@ -40,12 +40,12 @@ public class ItemPedidoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ItemPedido> save(@RequestBody ItemPedido itemPedido) {
+	public ResponseEntity<ItemPedido> save(@RequestBody @Valid ItemPedido itemPedido) {
 		return new ResponseEntity<>(itemPedidoService.save(itemPedido), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ItemPedido> update(@PathVariable Integer id, @RequestBody ItemPedido itemPedido) {
+	public ResponseEntity<ItemPedido> update(@PathVariable Integer id, @RequestBody @Valid ItemPedido itemPedido) {
 		itemPedido = itemPedidoService.update(id,itemPedido);
 		return new ResponseEntity<>(itemPedido,HttpStatus.OK);
 	}

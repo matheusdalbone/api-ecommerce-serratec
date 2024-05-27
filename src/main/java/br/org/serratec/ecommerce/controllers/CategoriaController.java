@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.org.serratec.ecommerce.entities.Categoria;
 import br.org.serratec.ecommerce.services.CategoriaService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/categorias")
@@ -41,12 +42,12 @@ public class CategoriaController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> save(@RequestBody Categoria categoria) {
+	public ResponseEntity<Categoria> save(@RequestBody @Valid Categoria categoria) {
 		return new ResponseEntity<>(categoriaService.save(categoria), HttpStatus.CREATED);
 	}
 	
 	@PutMapping 
-	public ResponseEntity<Categoria> update(@RequestBody Categoria categoria) {
+	public ResponseEntity<Categoria> update(@RequestBody @Valid Categoria categoria) {
 		return new ResponseEntity<>(categoriaService.update(categoria), HttpStatus.CREATED);
 	}
 	

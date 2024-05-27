@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import br.org.serratec.ecommerce.entities.Imagem;
 import br.org.serratec.ecommerce.entities.Produto;
 import br.org.serratec.ecommerce.services.ProdutoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/produtos")
@@ -60,13 +61,13 @@ public class ProdutoController {
 	
 	@PostMapping
 	public ResponseEntity<Produto> save(@RequestParam("file") MultipartFile file,
-			@RequestPart("produto") Produto produto) throws IOException {
+			@RequestPart("produto") @Valid Produto produto) throws IOException {
 		return new ResponseEntity<>(produtoService.save(file, produto), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Produto> update(@PathVariable Integer id, @RequestParam("file") MultipartFile file,
-			@RequestPart("produto") Produto produto) throws IOException {
+			@RequestPart("produto") @Valid Produto produto) throws IOException {
 		produto = produtoService.update(id, file, produto);
 		return new ResponseEntity<>(produto, HttpStatus.OK);
 	}

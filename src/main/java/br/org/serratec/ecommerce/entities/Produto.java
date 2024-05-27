@@ -2,6 +2,8 @@ package br.org.serratec.ecommerce.entities;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "produto")
@@ -24,15 +27,18 @@ public class Produto {
 	private Integer idProduto;
 
 	@Column(name = "nome")
+	@NotBlank(message = "Digite o nome do produto")
 	private String nome;
 
 	@Column(name = "descricao")
+	@NotBlank(message = "Digite a descrição do produto")
 	private String descricao;
 
 	@Column(name = "qtd_estoque")
 	private Integer qtdEstoque;
 
 	@Column(name = "data_cadastro")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataCadastro;
 
 	@Column(name = "valor_unitario")

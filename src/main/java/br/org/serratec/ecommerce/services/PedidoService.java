@@ -55,17 +55,7 @@ public class PedidoService {
 	}
 	
 	public Pedido findById(Integer id) {
-		Pedido pedido = pedidoRepository.findById(id).orElseThrow(
-				() -> new EntityNotFoundExceptionHandler(id));
-		Double valorTotal = 0.0;
-		
-		List<ItemPedido> itensPedido = pedido.getItensPedido();
-		for(ItemPedido item: itensPedido) {
-			valorTotal += item.getValorLiquido();
-		}
-		
-		pedido.setValorTotal(valorTotal);
-		pedidoRepository.save(pedido);
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow();
 
 		return pedido;
 	}
@@ -94,6 +84,7 @@ public class PedidoService {
 		
 		switch(novoPedido.getStatus()) {
 			case PEDIDO_REALIZADO:
+				novoPedido = atualizarValor(id);
 				email.enviaEmail(destinatario,"Pedido realizado" , "Seu pedido foi realizado." + relatorioPedido(id));
 				if(novoPedido.getDataEnvio() != null && novoPedido.getDataEntrega() == null) {
 					novoPedido.setStatus(StatusEnum.EM_TRANSITO);
@@ -140,6 +131,23 @@ public class PedidoService {
 		
 		relatorioPedido = modelMapper.map(pedido, RelatorioPedidoDto.class);
 		return relatorioPedido;
+	}
+	
+
+	public Pedido atualizarValor(Integer id) {
+		
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow();
+		Double valorTotal = 0.0;
+		
+		List<ItemPedido> itensPedido = pedido.getItensPedido();
+		for(ItemPedido item: itensPedido) {
+			valorTotal += item.getValorLiquido();
+		}
+		
+		pedido.setValorTotal(valorTotal);
+		pedidoRepository.save(pedido);
+		
+		return pedido;
 	}
 	
 }
