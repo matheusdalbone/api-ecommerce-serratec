@@ -33,17 +33,8 @@ public class ProdutoService {
 
 	@Transactional
 	public Produto save(MultipartFile file, Produto produto) throws IOException {
-		Produto produtoAux = new Produto();
-		produtoAux.setNome(produto.getNome());
-		produtoAux.setDescricao(produto.getDescricao());
-		produtoAux.setQtdEstoque(produto.getQtdEstoque());
-		produtoAux.setDataCadastro(produto.getDataCadastro());
-		produtoAux.setValorUnitario(produto.getValorUnitario());
-		produtoAux.setCategoria(produto.getCategoria());
-
-		Imagem imagem = new Imagem();
-		imagem.setData(file.getBytes());
-		imagem.setTipo(file.getContentType());
+		Produto produtoAux = saveProduto(produto);
+		Imagem imagem = saveImagem(file);
 		imagemRepository.save(imagem);
 		produtoAux.setImagem(imagem);
 
@@ -51,26 +42,9 @@ public class ProdutoService {
 	}
 
 	public Produto update(Integer id, MultipartFile file, Produto produto) throws IOException {
-		Imagem imagem;
-		Optional<Produto> opProd = produtoRepository.findById(id);
-		if (opProd.isEmpty())
-			return null;
+		Produto produtoBanco = updateProduto(id, produto);
+		Imagem imagem = updateImagem(id, file);
 
-		Produto produtoBanco = opProd.get();
-		produtoBanco.setNome(produto.getNome());
-		produtoBanco.setDescricao(produto.getDescricao());
-		produtoBanco.setQtdEstoque(produto.getQtdEstoque());
-		produtoBanco.setDataCadastro(produto.getDataCadastro());
-		produtoBanco.setValorUnitario(produto.getValorUnitario());
-		produtoBanco.setCategoria(produto.getCategoria());
-
-		if (produtoBanco.getImagem() == null)
-			imagem = new Imagem();
-		else
-			imagem = produtoBanco.getImagem();
-
-		imagem.setData(file.getBytes());
-		imagem.setTipo(file.getContentType());
 		imagemRepository.saveAndFlush(imagem);
 		produtoBanco.setImagem(imagem);
 
@@ -94,7 +68,7 @@ public class ProdutoService {
 	public long count() {
 		return produtoRepository.count();
 	}
-	
+
 	@Transactional
 	public Imagem getImagemId(Integer id) {
 		Optional<Produto> opImagem = produtoRepository.findById(id);
@@ -102,4 +76,49 @@ public class ProdutoService {
 			return opImagem.get().getImagem();
 		return null;
 	}
+
+	public Produto saveProduto(Produto produto) {
+		Produto produtoAux = new Produto();
+		produtoAux.setNome(produto.getNome());
+		produtoAux.setDescricao(produto.getDescricao());
+		produtoAux.setQtdEstoque(produto.getQtdEstoque());
+		produtoAux.setDataCadastro(produto.getDataCadastro());
+		produtoAux.setValorUnitario(produto.getValorUnitario());
+		produtoAux.setCategoria(produto.getCategoria());
+		return produtoAux;
+	}
+
+	public Produto updateProduto(Integer id, Produto produto) {
+		Optional<Produto> opProd = produtoRepository.findById(id);
+		if (opProd.isEmpty())
+			return null;
+		Produto produtoBanco = opProd.get();
+		produtoBanco.setNome(produto.getNome());
+		produtoBanco.setDescricao(produto.getDescricao());
+		produtoBanco.setQtdEstoque(produto.getQtdEstoque());
+		produtoBanco.setDataCadastro(produto.getDataCadastro());
+		produtoBanco.setValorUnitario(produto.getValorUnitario());
+		produtoBanco.setCategoria(produto.getCategoria());
+		produtoBanco.setImagem(produto.getImagem());
+		return produtoBanco;
+	}
+
+	public Imagem saveImagem(MultipartFile file) throws IOException {
+		Imagem imagem = new Imagem();
+		imagem.setData(file.getBytes());
+		imagem.setTipo(file.getContentType());
+		return imagem;
+	}
+
+	public Imagem updateImagem(Integer id, MultipartFile file) throws IOException {
+		Imagem imagem = imagemRepository.findById(id).orElse(null);
+		if (imagem == null) {
+			imagem = new Imagem();
+			imagem.setIdImagem(id);
+		}
+		imagem.setData(file.getBytes());
+		imagem.setTipo(file.getContentType());
+		return imagem;
+	}
+
 }
