@@ -87,14 +87,14 @@ public class PedidoService {
 			case PEDIDO_REALIZADO:
 				novoPedido = atualizarValor(id);
 				if(novoPedido.getDataEnvio() == null && novoPedido.getDataEntrega() == null)
-				email.enviaEmail(destinatario,"Pedido realizado" , "Seu pedido foi realizado." + relatorioPedido(id));
+				email.enviaEmail(destinatario,"Pedido realizado" , "Seu pedido foi realizado." + relatorioPedido(id).toStringFormatado());
 				if(novoPedido.getDataEnvio() != null && novoPedido.getDataEntrega() == null) {
 					novoPedido.setStatus(StatusEnum.EM_TRANSITO);
-					email.enviaEmail(destinatario,"Pedido em trânsito" , "Seu pedido foi enviado para a transportadora e está a caminho." + relatorioPedido(id));
+					email.enviaEmail(destinatario,"Pedido em trânsito" , "Seu pedido foi enviado para a transportadora e está a caminho." + relatorioPedido(id).toStringFormatado());
 				}
 				if(novoPedido.getDataEnvio() != null && novoPedido.getDataEntrega() != null) {
 					novoPedido.setStatus(StatusEnum.PEDIDO_ENTREGUE);
-					email.enviaEmail(destinatario,"Pedido entregue" , "Seu pedido chegou em sua residência." + relatorioPedido(id));
+					email.enviaEmail(destinatario,"Pedido entregue" , "Seu pedido chegou em sua residência." + relatorioPedido(id).toStringFormatado());
 				}
 				break;
 			default:

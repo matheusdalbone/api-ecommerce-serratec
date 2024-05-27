@@ -1,6 +1,7 @@
 package br.org.serratec.ecommerce.dtos;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -48,22 +49,20 @@ public class RelatorioPedidoDto {
 		this.itensPedido = itensPedido;
 	}
 	
-//	@Override
-//	public String toString() {
-//	
-//		return toString() + String.format("""
-//				Relatório de pedido: 
-//				Número do pedido: %s
-//				Data do Pedido: %s
-//				Valor total: %s
-//				Itens do pedido: %s
-//				""", idPedido, dataPedido, valorTotal, itensPedido);
-//	}
+	public String toStringFormatado() {
+		DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		return toString() + String.format("""
+				Relatório de pedido: 
+				Número do pedido: %s
+				Data do pedido: %s
+				Valor total: R$%.2f
+				Itens do Pedido: %s
+				""", idPedido, dataPedido.format(f), valorTotal, itensPedido);
+	}
 
 	@Override
 	public String toString() {
-		return "RelatorioPedidoDto [idPedido=" + idPedido + ", dataPedido=" + dataPedido + ", valorTotal=" + valorTotal
-				+ ", itensPedido=" + itensPedido + "]";
+		return "\n";
 	}
 	
 	

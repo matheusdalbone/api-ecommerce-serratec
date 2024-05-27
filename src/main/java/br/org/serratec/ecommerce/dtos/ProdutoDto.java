@@ -19,4 +19,14 @@ public class ProdutoDto {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("""
+				Codigo do produto: %s
+				Nome do produto: %s
+				""", produtoId, nome);
+	}
+	
+	
 }
