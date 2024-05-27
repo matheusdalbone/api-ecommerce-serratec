@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.org.serratec.ecommerce.entities.Imagem;
 import br.org.serratec.ecommerce.entities.Produto;
+import br.org.serratec.ecommerce.exceptions.EntityNotFoundExceptionHandler;
 import br.org.serratec.ecommerce.repositories.ImagemRepository;
 import br.org.serratec.ecommerce.repositories.ProdutoRepository;
 import jakarta.transaction.Transactional;
@@ -28,7 +29,8 @@ public class ProdutoService {
 	}
 
 	public Produto findById(Integer id) {
-		return produtoRepository.findById(id).orElse(null);
+		return produtoRepository.findById(id).orElseThrow(
+				()-> new EntityNotFoundExceptionHandler("Este produto não existe. Id:"+id));
 	}
 
 	@Transactional

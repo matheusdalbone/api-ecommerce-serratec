@@ -31,7 +31,7 @@ public class Cliente {
 	private Integer clienteId;
 	
 	@Column(name = "email")
-	@Email(message = "email inválido.")
+	@Pattern(regexp = "^[a-zA-Z0-9+&-]+(?:\\.[a-zA-Z0-9_+&-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$",message = "email inválido.")
 	@NotBlank(message = "Digite o Email")
 	private String email;
 	

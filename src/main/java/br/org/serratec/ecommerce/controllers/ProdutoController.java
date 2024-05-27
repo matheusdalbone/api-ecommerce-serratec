@@ -37,11 +37,11 @@ public class ProdutoController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Produto> findById(@PathVariable Integer id) {
-		Produto livro = produtoService.findById(id);
-		if (livro == null)
-			return new ResponseEntity<>(livro, HttpStatus.NOT_FOUND);
+		Produto produto = produtoService.findById(id);
+		if (produto == null)
+			return new ResponseEntity<>(produto, HttpStatus.NOT_FOUND);
 		else
-			return new ResponseEntity<>(livro, HttpStatus.OK);
+			return new ResponseEntity<>(produto, HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}/imagem")

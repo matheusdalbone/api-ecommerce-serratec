@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.org.serratec.ecommerce.api.ApiViaCep;
 import br.org.serratec.ecommerce.entities.Endereco;
 import br.org.serratec.ecommerce.services.ApiViaCepService;
 import br.org.serratec.ecommerce.services.EnderecoService;
@@ -46,11 +45,6 @@ public class EnderecoController {
 
 	@PostMapping
 	public ResponseEntity<Endereco> save(@Valid @RequestBody Endereco endereco) {
-		ApiViaCep aux = apiViaCepService.consultaCep(endereco.getCep());
-		endereco.setRua(aux.getLogradouro());
-		endereco.setBairro(aux.getBairro());
-		endereco.setCidade(aux.getLocalidade());
-		endereco.setUf(aux.getUf());
 		return new ResponseEntity<>(enderecoService.save(endereco), HttpStatus.CREATED);
 	}
 

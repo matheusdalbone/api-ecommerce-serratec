@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.org.serratec.ecommerce.api.ApiViaCep;
 import br.org.serratec.ecommerce.entities.Endereco;
 import br.org.serratec.ecommerce.repositories.EnderecoRepository;
 
@@ -13,6 +14,8 @@ public class EnderecoService {
 
 	@Autowired
 	EnderecoRepository enderecoRepository;
+	@Autowired
+	ApiViaCepService apiViaCepService;
 	
 	public List<Endereco> findAll() {
 		return enderecoRepository.findAll();
@@ -23,11 +26,26 @@ public class EnderecoService {
 	}
 	
 	public Endereco save(Endereco endereco) {
+		ApiViaCep aux = apiViaCepService.consultaCep(endereco.getCep());
+		endereco.setRua(aux.getLogradouro());
+		endereco.setBairro(aux.getBairro());
+		endereco.setCidade(aux.getLocalidade());
+		endereco.setUf(aux.getUf());
 		return enderecoRepository.save(endereco);
 	}
 	
 	public Endereco update(Integer id, Endereco endereco) {
 		Endereco entidade = enderecoRepository.getReferenceById(id);
+		entidade.setCep(endereco.getCep());
+		entidade.setNumero(endereco.getNumero());
+		entidade.setComplemento(endereco.getComplemento());
+		
+		ApiViaCep aux = apiViaCepService.consultaCep(endereco.getCep());
+		entidade.setRua(aux.getLogradouro());
+		entidade.setBairro(aux.getBairro());
+		entidade.setCidade(aux.getLocalidade());
+		entidade.setUf(aux.getUf());
+		
 		return enderecoRepository.save(entidade);
 	}
 	

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.org.serratec.ecommerce.entities.Categoria;
+import br.org.serratec.ecommerce.exceptions.EntityNotFoundExceptionHandler;
 import br.org.serratec.ecommerce.services.CategoriaService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -42,12 +44,12 @@ public class CategoriaController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> save(@RequestBody @Valid Categoria categoria) {
+	public ResponseEntity<Categoria> save(@Valid @RequestBody Categoria categoria) {
 		return new ResponseEntity<>(categoriaService.save(categoria), HttpStatus.CREATED);
 	}
 	
-	@PutMapping 
-	public ResponseEntity<Categoria> update(@RequestBody @Valid Categoria categoria) {
+	@PutMapping
+	public ResponseEntity<Categoria> update(@Valid @RequestBody Categoria categoria) {
 		return new ResponseEntity<>(categoriaService.update(categoria), HttpStatus.CREATED);
 	}
 	
@@ -58,6 +60,6 @@ public class CategoriaController {
 		if(deletado)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new EntityNotFoundExceptionHandler("Este idnão existe. Id: "+id);
 	}
 }
