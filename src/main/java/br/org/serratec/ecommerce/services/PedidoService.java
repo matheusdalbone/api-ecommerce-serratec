@@ -55,14 +55,15 @@ public class PedidoService {
 	}
 	
 	public Pedido findById(Integer id) {
-		Pedido pedido = pedidoRepository.findById(id).orElseThrow();
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow(
+				() -> new EntityNotFoundExceptionHandler("Não é possível encontrar este pedido. " + id));
 
 		return pedido;
 	}
 	
 	public PedidoDto findByIdPedidoDto(Integer id) {
 		Pedido pedido = pedidoRepository.findById(id).orElseThrow(
-				() -> new EntityNotFoundExceptionHandler(id));
+				() -> new EntityNotFoundExceptionHandler("Não é possível encontrar este pedido resumido. " + id));
 		PedidoDto pedidoDto = null;
 		pedidoDto = modelMapper.map(pedido, PedidoDto.class);
 		
@@ -85,6 +86,7 @@ public class PedidoService {
 		switch(novoPedido.getStatus()) {
 			case PEDIDO_REALIZADO:
 				novoPedido = atualizarValor(id);
+				if(novoPedido.getDataEnvio() == null && novoPedido.getDataEntrega() == null)
 				email.enviaEmail(destinatario,"Pedido realizado" , "Seu pedido foi realizado." + relatorioPedido(id));
 				if(novoPedido.getDataEnvio() != null && novoPedido.getDataEntrega() == null) {
 					novoPedido.setStatus(StatusEnum.EM_TRANSITO);
@@ -126,7 +128,7 @@ public class PedidoService {
 	
 	public RelatorioPedidoDto relatorioPedido(Integer id) {
 		Pedido pedido = pedidoRepository.findById(id).orElseThrow(
-				() -> new EntityNotFoundExceptionHandler(id));
+				() -> new EntityNotFoundExceptionHandler("Não é possível encontrar este relatório de pedido. " + id));
 		RelatorioPedidoDto relatorioPedido = null;
 		
 		relatorioPedido = modelMapper.map(pedido, RelatorioPedidoDto.class);
@@ -136,7 +138,8 @@ public class PedidoService {
 
 	public Pedido atualizarValor(Integer id) {
 		
-		Pedido pedido = pedidoRepository.findById(id).orElseThrow();
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow(
+				() -> new EntityNotFoundExceptionHandler("Não é possível encontrar este pedido. " + id));
 		Double valorTotal = 0.0;
 		
 		List<ItemPedido> itensPedido = pedido.getItensPedido();
