@@ -1,10 +1,11 @@
-package br.org.serratec.ecommerce.controllers;
+package br.org.serratec.ecommerce.configurations;
 
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -25,6 +26,7 @@ import br.org.serratec.ecommerce.services.UsuarioDetailsServiceImpl;
 
 
 
+
 @Configuration
 @EnableWebSecurity(debug = true)
 public class WebSecurityConfig {
@@ -36,11 +38,24 @@ public class WebSecurityConfig {
 		http
             .cors(Customizer.withDefaults())
             .csrf(csrf -> csrf.disable())
-            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+           
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/health-check", "/auth/**", "/api/roles/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                    .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                    .requestMatchers("/health-check", "/auth/**",  "/swagger-ui/**","/api/roles/**", "/v3/api-docs/**").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/categorias/**","/produtos/**").permitAll()
+                    .requestMatchers("/**").hasAnyRole("ADMIN","USER")
                     .anyRequest().authenticated())
+            		.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                    .requestMatchers(HttpMethod.GET,"/itemPedido").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
+//                    
+//                    .requestMatchers(HttpMethod.GET,"/pedidos","/clientes","/enderecos").hasAuthority("ROLE_ADMIN")
+//                    .requestMatchers(HttpMethod.POST,"/produtos","/categorias","/itemPedido").hasAuthority("ROLE_ADMIN")
+//                    .requestMatchers(HttpMethod.PUT,"/pedidos","/produtos","/categorias","/itemPedido/{id}").hasAuthority("ROLE_ADMIN")
+//                    .requestMatchers(HttpMethod.DELETE,"/**").hasAuthority("ROLE_ADMIN")
+//                    
+//                    .requestMatchers(HttpMethod.GET,"/enderecos/{id}","/pedidos/{id}","/clientes/{id}").hasAuthority("ROLE_USER")
+//                    .requestMatchers(HttpMethod.POST,"/enderecos","/pedidos","/clientes","/pedidos").hasAuthority("ROLE_USER")
+//                    .requestMatchers(HttpMethod.PUT,"/enderecos/{id}","/clientes/{id}").hasAuthority("ROLE_USER")
+            		
 		;
 	
 
@@ -54,7 +69,7 @@ public class WebSecurityConfig {
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080/"));
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
