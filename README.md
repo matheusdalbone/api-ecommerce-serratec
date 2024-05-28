@@ -29,27 +29,27 @@ Após a instalação de todos os pré-requisitos abra o Springtools e na Package
 Antes de executar o projeto no SpringTools crie um banco de dados chamado ecommerce no Dbeaver. <br>
 Após a criação do banco de dados, certifique-se de copiar as informações abaixo e colar no seu application.properties no caminho src/main/resources/application.properties
 
-> Nome da aplicação
+> Nome da aplicação <br>
 spring.application.name=ecommerce <br>
 
-> Propriedades do banco de dados: 
-spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.hibernate.ddl-auto			= update
-spring.jpa.hibernate.show-sql			= true
-spring.datasource.url					= jdbc:postgresql://localhost:5432/ecommerce
-spring.datasource.username				= postgres
-spring.datasource.password				= *Seu password do Postgres*
-logging.level.org.hibernate.SQL			= INFO
+> Propriedades do banco de dados: <br>
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect <br>
+spring.jpa.hibernate.ddl-auto			= update <br>
+spring.jpa.hibernate.show-sql			= true <br>
+spring.datasource.url					= jdbc:postgresql://localhost:5432/ecommerce <br>
+spring.datasource.username				= postgres <br>
+spring.datasource.password				= *Seu password do Postgres* <br>
+logging.level.org.hibernate.SQL			= INFO <br>
 
->Prorpriedades do mailtrap
-spring.mail.host=sandbox.smtp.mailtrap.io
-spring.mail.port=2525
-spring.mail.username=*Seu username do mailtrap*
-spring.mail.password=*Seu password do mailtrap*
-spring.mail.properties.mail.smtp.auth=true
-spring.mail.properties.mail.smtp.starttls.enable=true
-spring.mail.properties.mail.smtp.starttls.required=true
-spring.mail.properties.mail.smtp.ssl.enable=false
+>Prorpriedades do mailtrap <br>
+spring.mail.host=sandbox.smtp.mailtrap.io <br>
+spring.mail.port=2525 <br>
+spring.mail.username=*Seu username do mailtrap* <br>
+spring.mail.password=*Seu password do mailtrap* <br>
+spring.mail.properties.mail.smtp.auth=true <br>
+spring.mail.properties.mail.smtp.starttls.enable=true <br>
+spring.mail.properties.mail.smtp.starttls.required=true <br>
+spring.mail.properties.mail.smtp.ssl.enable=false <br>
 
 Após configurar o application.properties, rode o projeto, verifique se as tabelas foram criadas no banco de dados corretamente e realize as requisições Http desejadas.
 
