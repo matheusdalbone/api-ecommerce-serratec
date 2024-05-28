@@ -1,11 +1,5 @@
 # api-ecommerce-serratec
 
-![GitHub repo size](https://img.shields.io/github/repo-size/iuricode/README-template?style=for-the-badge)
-![GitHub language count](https://img.shields.io/github/languages/count/iuricode/README-template?style=for-the-badge)
-![GitHub forks](https://img.shields.io/github/forks/iuricode/README-template?style=for-the-badge)
-![Bitbucket open issues](https://img.shields.io/bitbucket/issues/iuricode/README-template?style=for-the-badge)
-![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/iuricode/README-template?style=for-the-badge)
-
 
  Bem vindo(a) ao projeto final da disciplina de Desenvolvimento de Api Restful da Residência de TIC Desenvolvimento de Software do Serratec.
  A Ecommerce Serratec é uma Api Rest desenvolvida com a linguagem Java e o Framework Springboot.
@@ -51,7 +45,7 @@ spring.mail.properties.mail.smtp.starttls.enable=true <br>
 spring.mail.properties.mail.smtp.starttls.required=true <br>
 spring.mail.properties.mail.smtp.ssl.enable=false <br>
 
-Após configurar o application.properties, rode o projeto, verifique se as tabelas foram criadas no banco de dados corretamente e realize as requisições Http desejadas.
+Após configurar o application.properties, rode o projeto, verifique se as tabelas foram criadas no banco de dados corretamente e realize as requisições Http desejadas e após atualizar o pedido, verifique na sua mailbox através do link https://mailtrap.io/.
 
 ## Requisições Http
 - Postman API: https://www.postman.com/downloads/
