@@ -40,7 +40,9 @@ public class ItemPedidoService {
 	}
 	
 	public ItemPedido update(Integer id, ItemPedido itemPedido) {
-		ItemPedido entidade = itemPedidoRepository.getReferenceById(id);
+		ItemPedido entidade = itemPedidoRepository.findById(id).orElseThrow(
+				() -> new EntityNotFoundExceptionHandler("Id do item pedido não encontrado" + id));
+		;
 		
 		Integer produtoId = itemPedido.getProduto().getIdProduto();
 		Produto produto = produtoRepository.findById(produtoId).orElseThrow(

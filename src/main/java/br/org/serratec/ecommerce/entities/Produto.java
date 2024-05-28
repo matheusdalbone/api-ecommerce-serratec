@@ -3,6 +3,7 @@ package br.org.serratec.ecommerce.entities;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,7 +44,8 @@ public class Produto {
 
 	@Column(name = "valor_unitario")
 	private Double valorUnitario;
-
+	
+	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	private Imagem imagem;

@@ -43,7 +43,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/health-check", "/auth/**",  "/swagger-ui/**","/api/roles/**", "/v3/api-docs/**").permitAll()
                     .requestMatchers(HttpMethod.GET,"/categorias/**","/produtos/**").permitAll()
                     .requestMatchers("/**").hasAnyRole("ADMIN","USER")
-                    .anyRequest().authenticated())
+                    .anyRequest().permitAll())
             		.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 //                    .requestMatchers(HttpMethod.GET,"/itemPedido").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
 //                    
