@@ -6,10 +6,10 @@
 
 ## Pré-requisitos
 
-- Versão Java JDK 17: https://www.oracle.com/br/java/technologies/downloads/#java17
+- JDK 17: https://www.oracle.com/br/java/technologies/downloads/#java17
 - Maven: https://maven.apache.org/download.cgi
 - Framework Spring: https://spring.io/tools
-- Banco de dados PostgreSQL: https://www.postgresql.org/download/ > Certifique-se de gravas a senha criada na instalação do Postgres
+- Banco de dados PostgreSQL: https://www.postgresql.org/download/ (Certifique-se de gravar a senha criada na instalação do Postgres)
 - Gercenciador de banco de dados Dbeaver: https://dbeaver.io/download/
 
 ## Instalando o Projeto
