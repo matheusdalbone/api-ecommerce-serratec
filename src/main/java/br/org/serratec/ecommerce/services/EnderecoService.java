@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.org.serratec.ecommerce.api.ApiViaCep;
 import br.org.serratec.ecommerce.entities.Endereco;
+import br.org.serratec.ecommerce.exceptions.EntityNotFoundExceptionHandler;
 import br.org.serratec.ecommerce.repositories.EnderecoRepository;
 
 @Service
@@ -22,7 +23,8 @@ public class EnderecoService {
 	}
 	
 	public Endereco findById(Integer id) {
-		return enderecoRepository.findById(id).orElse(null);
+		return enderecoRepository.findById(id).orElseThrow(
+				()-> new EntityNotFoundExceptionHandler("Este endereço não existe. Id: " + id));
 	}
 	
 	public Endereco save(Endereco endereco) {
@@ -35,7 +37,8 @@ public class EnderecoService {
 	}
 	
 	public Endereco update(Integer id, Endereco endereco) {
-		Endereco entidade = enderecoRepository.getReferenceById(id);
+		Endereco entidade = enderecoRepository.findById(id).orElseThrow(
+				()-> new EntityNotFoundExceptionHandler("Este endereço não existe. Id: " + id));;
 		entidade.setCep(endereco.getCep());
 		entidade.setNumero(endereco.getNumero());
 		entidade.setComplemento(endereco.getComplemento());

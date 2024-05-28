@@ -31,7 +31,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR,
 				"Ocorreu um erro: " + exception.getLocalizedMessage());
 		pd.setType(URI.create("http://localhost:8080/errors/internal-server-error"));
-		pd.setTitle("Erro Interno");
+		pd.setTitle("Excessão de argumento ilegal ಥ_ಥ");
+		pd.setProperty("hostname", "localhost");
+		return ResponseEntity.status(500).body(pd);
+	}
+	
+	@ExceptionHandler(NullPointerException.class)
+	public ResponseEntity<?> handleNullPoiterException(NullPointerException e, WebRequest request) {
+		ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR,
+				"Ocorreu um erro: " + e.getLocalizedMessage());
+		pd.setType(URI.create("http://localhost:8080/errors/internal-server-error"));
+		pd.setTitle("Excessão de ponteiro nulo ( ﾉ ﾟｰﾟ)ﾉ");
 		pd.setProperty("hostname", "localhost");
 		return ResponseEntity.status(500).body(pd);
 	}
@@ -47,7 +57,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(EntityNotFoundExceptionHandler.class)
 	public ResponseEntity<StandardError> entityNotFound(EntityNotFoundExceptionHandler e, HttpServletRequest request) {
-		String error = "Entity not found";
+		String error = "Entidade não encontrada";
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(),
 				request.getRequestURI());

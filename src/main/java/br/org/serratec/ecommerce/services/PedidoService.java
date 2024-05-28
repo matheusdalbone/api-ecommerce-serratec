@@ -56,14 +56,14 @@ public class PedidoService {
 	
 	public Pedido findById(Integer id) {
 		Pedido pedido = pedidoRepository.findById(id).orElseThrow(
-				() -> new EntityNotFoundExceptionHandler("Não é possível encontrar este pedido. " + id));
+				() -> new EntityNotFoundExceptionHandler("Este pedido não existe. Id: " + id));
 
 		return pedido;
 	}
 	
 	public PedidoDto findByIdPedidoDto(Integer id) {
 		Pedido pedido = pedidoRepository.findById(id).orElseThrow(
-				() -> new EntityNotFoundExceptionHandler("Não é possível encontrar este pedido resumido. " + id));
+				() -> new EntityNotFoundExceptionHandler("Este pedido resumido não existe. Id: " + id));
 		PedidoDto pedidoDto = null;
 		pedidoDto = modelMapper.map(pedido, PedidoDto.class);
 		
@@ -80,7 +80,7 @@ public class PedidoService {
 		Integer clienteId = pedido.getCliente().getClienteId();
 		Cliente cliente = clienteRepository.findById(clienteId).orElse(null);
 		String destinatario = cliente.getEmail();
-		Pedido novoPedido = pedidoRepository.getReferenceById(id);
+		Pedido novoPedido = pedidoRepository.findById(id).orElse(null);
 		updateData(novoPedido, pedido);
 		
 		switch(novoPedido.getStatus()) {
@@ -128,7 +128,7 @@ public class PedidoService {
 	
 	public RelatorioPedidoDto relatorioPedido(Integer id) {
 		Pedido pedido = pedidoRepository.findById(id).orElseThrow(
-				() -> new EntityNotFoundExceptionHandler("Não é possível encontrar este relatório de pedido. " + id));
+				() -> new EntityNotFoundExceptionHandler("Este relatório de pedido não existe. Id: " + id));
 		RelatorioPedidoDto relatorioPedido = null;
 		
 		relatorioPedido = modelMapper.map(pedido, RelatorioPedidoDto.class);
@@ -139,7 +139,7 @@ public class PedidoService {
 	public Pedido atualizarValor(Integer id) {
 		
 		Pedido pedido = pedidoRepository.findById(id).orElseThrow(
-				() -> new EntityNotFoundExceptionHandler("Não é possível encontrar este pedido. " + id));
+				() -> new EntityNotFoundExceptionHandler("Este pedido não existe. Id: " + id));
 		Double valorTotal = 0.0;
 		
 		List<ItemPedido> itensPedido = pedido.getItensPedido();

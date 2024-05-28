@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.org.serratec.ecommerce.dtos.ClienteResumidoDto;
 import br.org.serratec.ecommerce.entities.Cliente;
 import br.org.serratec.ecommerce.entities.Endereco;
+import br.org.serratec.ecommerce.exceptions.EntityNotFoundExceptionHandler;
 import br.org.serratec.ecommerce.repositories.ClienteRepository;
 
 @Service
@@ -21,8 +22,36 @@ public class ClienteService {
 		return clienteRepository.findAll();
 	}
 	
+	public List<ClienteResumidoDto> findAllClienteResumido() {
+		List<Cliente> clientes = clienteRepository.findAll();
+		List<ClienteResumidoDto> clientesDto = new ArrayList<>();
+		
+		for(Cliente cliente : clientes) {
+			ClienteResumidoDto clienteDto = new ClienteResumidoDto();
+			clienteDto.setNomeCompleto(cliente.getNomeCompleto());
+			clienteDto.setEmail(cliente.getEmail());
+			clienteDto.setCpf(cliente.getCpf());
+ 			
+			clientesDto.add(clienteDto);
+		}
+		return clientesDto;
+	}
+	
 	public Cliente findById(Integer id) {
-		return clienteRepository.findById(id).orElse(null);
+		return clienteRepository.findById(id).orElseThrow(
+				()-> new EntityNotFoundExceptionHandler("Este cliente não existe. Id: " + id));
+	}
+	
+	public ClienteResumidoDto findByIdResumido(Integer id) {
+		Cliente cliente = clienteRepository.findById(id).orElseThrow(
+				()-> new EntityNotFoundExceptionHandler("Este cliente não existe. Id: " + id));
+	
+		ClienteResumidoDto clienteDto = new ClienteResumidoDto();
+		clienteDto.setNomeCompleto(cliente.getNomeCompleto());
+		clienteDto.setEmail(cliente.getEmail());
+		clienteDto.setCpf(cliente.getCpf());
+		
+		return clienteDto;
 	}
 	
 	public Cliente save(Cliente cliente) {
@@ -30,7 +59,8 @@ public class ClienteService {
 	}
 	
 	public Cliente update(Integer id,Cliente cliente) {
-		Cliente clienteAux = clienteRepository.getReferenceById(id);
+		Cliente clienteAux = clienteRepository.findById(id).orElseThrow(
+				()-> new EntityNotFoundExceptionHandler("Este cliente não existe. Id: " + id));;
 		Endereco endereco = cliente.getEndereco();
 		clienteAux.setDataNascimento(cliente.getDataNascimento());
 		clienteAux.setEndereco(endereco);
@@ -55,29 +85,7 @@ public class ClienteService {
 		}
 	}
 	
-	public ClienteResumidoDto findByIdResumido(Integer id) {
-		Cliente cliente = clienteRepository.findById(id).orElse(null);
 	
-		ClienteResumidoDto clienteDto = new ClienteResumidoDto();
-		clienteDto.setNomeCompleto(cliente.getNomeCompleto());
-		clienteDto.setEmail(cliente.getEmail());
-		clienteDto.setCpf(cliente.getCpf());
-		
-		return clienteDto;
-	}
 	
-	public List<ClienteResumidoDto> findAllClienteResumido() {
-		List<Cliente> clientes = clienteRepository.findAll();
-		List<ClienteResumidoDto> clientesDto = new ArrayList<>();
-		
-		for(Cliente cliente : clientes) {
-			ClienteResumidoDto clienteDto = new ClienteResumidoDto();
-			clienteDto.setNomeCompleto(cliente.getNomeCompleto());
-			clienteDto.setEmail(cliente.getEmail());
-			clienteDto.setCpf(cliente.getCpf());
- 			
-			clientesDto.add(clienteDto);
-		}
-		return clientesDto;
-	}
+	
 }

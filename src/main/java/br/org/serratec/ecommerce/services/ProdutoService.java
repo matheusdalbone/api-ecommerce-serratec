@@ -113,7 +113,8 @@ public class ProdutoService {
 	}
 
 	public Imagem updateImagem(Integer id, MultipartFile file) throws IOException {
-		Imagem imagem = imagemRepository.findById(id).orElse(null);
+		Imagem imagem = imagemRepository.findById(id).orElseThrow(
+				()-> new EntityNotFoundExceptionHandler("Esta imagem não existe. Id: " + id));
 		if (imagem == null) {
 			imagem = new Imagem();
 			imagem.setIdImagem(id);

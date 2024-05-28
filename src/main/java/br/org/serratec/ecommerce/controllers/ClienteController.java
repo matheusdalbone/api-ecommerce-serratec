@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.org.serratec.ecommerce.dtos.ClienteResumidoDto;
 import br.org.serratec.ecommerce.entities.Cliente;
+import br.org.serratec.ecommerce.exceptions.EntityNotFoundExceptionHandler;
 import br.org.serratec.ecommerce.services.ClienteService;
 import jakarta.validation.Valid;
 
@@ -69,6 +70,6 @@ public class ClienteController {
 		if(deletado)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new EntityNotFoundExceptionHandler("Este cliente não pode ser deletado pois o objeto de Id:" + id + " não existe. (╯°□°）╯︵ ┻━┻");
 	}
 }

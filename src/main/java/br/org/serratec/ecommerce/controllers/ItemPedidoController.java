@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.org.serratec.ecommerce.entities.ItemPedido;
+import br.org.serratec.ecommerce.exceptions.EntityNotFoundExceptionHandler;
 import br.org.serratec.ecommerce.services.ItemPedidoService;
 import jakarta.validation.Valid;
 
@@ -56,7 +57,7 @@ public class ItemPedidoController {
 		if (deletado)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new EntityNotFoundExceptionHandler("Este item não pode ser deletado do pedido pois o objeto de Id:" + id + " não existe. (╯°□°）╯︵ ┻━┻");
 	}
 }
 

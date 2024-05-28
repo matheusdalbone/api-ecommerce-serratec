@@ -90,4 +90,5 @@ public class PedidoController {
 		else
 			throw new EntityNotFoundExceptionHandler("Este pedido não pode ser deletado pois o objeto de Id:" + id + " não existe. (╯°□°）╯︵ ┻━┻");
 	}
+	
 }

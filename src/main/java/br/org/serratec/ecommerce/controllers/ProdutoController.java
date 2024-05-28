@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.org.serratec.ecommerce.entities.Imagem;
 import br.org.serratec.ecommerce.entities.Produto;
+import br.org.serratec.ecommerce.exceptions.EntityNotFoundExceptionHandler;
 import br.org.serratec.ecommerce.services.ProdutoService;
 import jakarta.validation.Valid;
 
@@ -78,7 +79,7 @@ public class ProdutoController {
 		if (deletado)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new EntityNotFoundExceptionHandler("Este pedido não pode ser deletado pois o objeto de Id:" + id + " não existe. (╯°□°）╯︵ ┻━┻");
 	}
 
 }

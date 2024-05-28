@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.org.serratec.ecommerce.entities.Categoria;
 import br.org.serratec.ecommerce.exceptions.EntityNotFoundExceptionHandler;
 import br.org.serratec.ecommerce.services.CategoriaService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -60,6 +59,6 @@ public class CategoriaController {
 		if(deletado)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
-			throw new EntityNotFoundExceptionHandler("Este idnão existe. Id: "+id);
+			throw new EntityNotFoundExceptionHandler("Esta categoria não pode ser deletada pois o objeto de Id:" + id + " não existe. (╯°□°）╯︵ ┻━┻");
 	}
 }
