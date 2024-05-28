@@ -49,13 +49,13 @@ public class ItemPedidoDto {
 	@Override
 	public String toString() {
 		return String.format("""
-				
 				Produto: %s
 				Preço do produto: R$ %.2f
 				Quantidade: %s
 				Valor Bruto: R$ %.2f
 				Percentual Desconto: %.2f%%
 				Valor de Venda: R$ %.2f
+				---------------------------
 				""", produto, precoVenda, quantidade, valorBruto, percentualDesconto, valorLiquido);
 	}
 	

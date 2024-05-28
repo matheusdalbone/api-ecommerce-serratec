@@ -2,6 +2,7 @@ package br.org.serratec.ecommerce.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,10 @@ public class ClienteService {
 	ClienteRepository clienteRepository;
 	
 	public List<Cliente> findAll() {
+		List<Cliente> clientes = clienteRepository.findAll();
+		if(clientes.isEmpty()) {
+			throw new NoSuchElementException("Não existe nunhum cliente cadastrado.");
+		}
 		return clienteRepository.findAll();
 	}
 	

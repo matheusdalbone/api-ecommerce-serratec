@@ -2,6 +2,7 @@ package br.org.serratec.ecommerce.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,10 @@ public class PedidoService {
 	ModelMapper modelMapper;
 	
 	public List<Pedido> findAll() {
+		List<Pedido> pedidos = pedidoRepository.findAll();
+		if(pedidos.isEmpty()) {
+			throw new NoSuchElementException("Não existe nenhum pedido cadastrada.");
+		}
 		return pedidoRepository.findAll();
 	}
 	

@@ -19,7 +19,9 @@ public class ApiViaCepService {
 		params.put("cep", cep);
 
 		ApiViaCep dto = restTemplate.getForObject(uri, ApiViaCep.class, params);
-
+		if(dto.getLogradouro() == null) {
+			throw new NullPointerException("O cep digitado não retorna um logradouro existente.");
+		}
 		return dto;
 	}
 }

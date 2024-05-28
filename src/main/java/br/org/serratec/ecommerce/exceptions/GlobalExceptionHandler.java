@@ -16,6 +16,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -51,7 +52,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
 
 		problemDetail.setTitle("Recurso Não Encontrado");
-		problemDetail.setType(URI.create("https://api.biblioteca.com/errors/not-found"));
+		problemDetail.setType(URI.create("http://localhost:8080/errors/not-found"));
 		return problemDetail;
 	}
 
@@ -62,6 +63,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(),
 				request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(HttpClientErrorException.class)
+	ProblemDetail handleHttpClientErrorException(HttpClientErrorException e) {
+		ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
+		pd.setTitle("Exceção de erro do cliente Http");
+		pd.setType(URI.create("https://api.ecommerce.com/errors/bad-request"));
+		
+		return pd;
 	}
 
 	@Override

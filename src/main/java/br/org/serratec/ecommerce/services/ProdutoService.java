@@ -2,6 +2,7 @@ package br.org.serratec.ecommerce.services;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class ProdutoService {
 	ImagemRepository imagemRepository;
 
 	public List<Produto> findAll() {
+		List<Produto> produtos = produtoRepository.findAll();
+		if(produtos.isEmpty()) {
+			throw new NoSuchElementException("Não existe nunhum produto cadastrado.");
+		}
 		return produtoRepository.findAll();
 	}
 

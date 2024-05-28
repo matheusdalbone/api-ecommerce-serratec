@@ -52,10 +52,12 @@ public class RelatorioPedidoDto {
 	public String toStringFormatado() {
 		DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		return toString() + String.format("""
+				
 				Relatório de pedido: 
 				Número do pedido: %s
 				Data do pedido: %s
 				Valor total: R$%.2f
+				
 				Itens do Pedido: %s
 				""", idPedido, dataPedido.format(f), valorTotal, itensPedido);
 	}

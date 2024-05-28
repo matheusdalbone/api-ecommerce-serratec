@@ -1,6 +1,7 @@
 package br.org.serratec.ecommerce.services;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,10 @@ public class CategoriaService {
 	 CategoriaRepository categoriaRepository;
 	
 	public List< Categoria> findAll() {
+		List<Categoria> categorias = categoriaRepository.findAll();
+		if(categorias.isEmpty()) {
+			throw new NoSuchElementException("Não existe nunhuma categoria cadastrada.");
+		}
 		return  categoriaRepository.findAll();
 	}
 	
